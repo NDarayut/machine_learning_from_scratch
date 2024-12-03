@@ -50,7 +50,7 @@ class LinearRegression:
             self.weights = new_weights
             self.bias = new_bias
 
-            print (f"Iteration: {i} Cost: {cost}")
+            print (f"Iteration: {i+1} Cost: {cost}")
 
     def predict(self, X):
         y_pred = np.dot(self.weights, X.T) + self.bias
