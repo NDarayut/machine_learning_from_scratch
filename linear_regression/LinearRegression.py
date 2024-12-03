@@ -3,7 +3,7 @@ import numpy as np
 class LinearRegression:
 
     # Constructor to initializes the default learning rates and iterations of the model
-    def __init__(self, learning_rates = 0.001, iterations = 100):
+    def __init__(self, learning_rates, iterations):
         self.learning_rates = learning_rates
         self.iterations = iterations
         self.weights = None
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     # Allow user to change parameters in terminal without interacting with the code
     parser = argparse.ArgumentParser(description="Train a Linear Regression model.")
-    parser.add_argument("--learning_rates", type=float, default=0.01, help="Learning rate for gradient descent")
+    parser.add_argument("--learning_rates", type=float, default=0.1, help="Learning rate for gradient descent")
     parser.add_argument("--iterations", type=int, default=100, help="Number of iterations for training")
 
     args = parser.parse_args()
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     # Parameters
     number_of_samples = 100  # Number of data points (samples)
-    number_of_features = 10   # Number of features
+    number_of_features = 2   # Number of features
 
     # Generate random feature values (e.g., normally distributed)
     X = np.random.rand(number_of_samples, number_of_features)

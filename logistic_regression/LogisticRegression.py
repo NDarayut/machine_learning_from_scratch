@@ -2,7 +2,7 @@ import numpy as np
 
 class LogisticRegression:
 
-    def __init__(self, learning_rates = 0.001, iterations = 100):
+    def __init__(self, learning_rates, iterations):
         self.learning_rates = learning_rates
         self.iterations = iterations
         self.weights = None
@@ -60,10 +60,10 @@ class LogisticRegression:
 if __name__ == "__main__":
 
     import argparse
-    import matplotlib.pyplot as plt
 
     # Allow user to change parameters in terminal without interacting with the code
     parser = argparse.ArgumentParser(description="Train a Logistic Regression model.")
+    # Initialize default learning rates and iterations
     parser.add_argument("--learning_rates", type=float, default=0.01, help="Learning rate for gradient descent")
     parser.add_argument("--iterations", type=int, default=100, help="Number of iterations for training")
 
@@ -92,35 +92,3 @@ if __name__ == "__main__":
 
     model = LogisticRegression(learning_rates = args.learning_rates, iterations = args.iterations)
     model.fit(X, y)
-
-    # Visualize the dataset
-    plt.figure(figsize=(8, 6))
-
-    # Plot points for class 0
-    plt.scatter(X[y == 0, 0], X[y == 0, 1], color='blue', label='Class 0')
-    # Plot points for class 1
-    plt.scatter(X[y == 1, 0], X[y == 1, 1], color='red', label='Class 1')
-
-    # Generate a grid of points to evaluate the model
-    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100), np.linspace(y_min, y_max, 100))
-    grid_points = np.c_[xx.ravel(), yy.ravel()]
-
-    # Predict probabilities for each point in the grid
-    Z = np.dot(grid_points, model.weights) + model.bias
-    Z = Z.reshape(xx.shape)
-
-    # Plot the decision boundary (where the probability = 0.5)
-    plt.contourf(xx, yy, model.sigmoid(Z), levels=[0, 0.5, 1], alpha=0.2, colors=['blue', 'red'])
-    plt.contour(xx, yy, model.sigmoid(Z), levels=[0.5], colors='black', linewidths=1, linestyles='--')
-
-    plt.title("Logistic Regression Decision Boundary")
-    plt.xlabel("Feature 1")
-    plt.ylabel("Feature 2")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-
-
-
