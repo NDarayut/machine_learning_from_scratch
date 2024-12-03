@@ -55,3 +55,41 @@ class LinearRegression:
     def predict(self, X):
         y_pred = np.dot(self.weights, X.T) + self.bias
         return y_pred
+
+
+# Training the model
+if __name__ == "__main__":
+
+    import argparse
+
+    # Allow user to change parameters in terminal without interacting with the code
+    parser = argparse.ArgumentParser(description="Train a Linear Regression model.")
+    parser.add_argument("--learning_rates", type=float, default=0.01, help="Learning rate for gradient descent")
+    parser.add_argument("--iterations", type=int, default=100, help="Number of iterations for training")
+
+    args = parser.parse_args()
+    # Ensure reproducibility
+    np.random.seed(123)
+
+    # Parameters
+    number_of_samples = 100  # Number of data points (samples)
+    number_of_features = 10   # Number of features
+
+    # Generate random feature values (e.g., normally distributed)
+    X = np.random.rand(number_of_samples, number_of_features)
+
+    # Define the weights and bias for the linear model
+    weights = np.random.rand(number_of_features)  # Coefficient for the feature
+    bias = 5 # Intercept
+
+    # Generate the target values using a linear relation with some noise
+    # np.random.randn(number_of_samples): Generate a bunch of random numbers equal to the amount of samples
+    # 0.2 makes the number less varied
+    noise = np.random.randn(number_of_samples) * 0.2  
+
+    # Generate the true value e.g., y
+    y = np.dot(weights, X.T) + bias + noise
+
+    # Create the model
+    model = LinearRegression(learning_rates=args.learning_rates, iterations=args.iterations) # learning_rates and iterations are hyperparameter
+    model.fit(X, y)
